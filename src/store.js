@@ -6,6 +6,7 @@ const useStore = create(persist(
     // User info
     user: {
       name: 'Alex Silva, CFP®',
+      plan: 'pro', // 'free' | 'starter' | 'pro'
       dailyQuote: 'Posicionamento autoral não é sobre o que você vende, mas sobre a tese que você defende para atrair os clientes (leads) qualificados.',
       suggestions: [
         'Como explicar a volatilidade atual para captar clientes de alta renda?',

@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import useStore from '../store';
 import ConsensusConverter from '../components/ConsensusConverter';
 import DecryptText from '../components/DecryptText';
+import { useDailyContent } from '../hooks/useDailyContent';
 
 const HOME_PHRASES = [
-  'Construindo autoridade inquestionável.',
-  'Flipando consensos em teses outlier.',
-  'Gerando leads de alto valor.',
-  'Orquestrando sua narrativa de marca.',
-  'Transformando dados em posts de impacto.',
+  'Existe um post ótimo na sua cabeça. Eu só vou tirar ele de lá.',
+  'Você sabe. Só não teve tempo de escrever ainda.',
+  'O que você falou no café hoje rendia um post. De nada.',
+  'Autoridade não se pede emprestada. Mas às vezes se escreve em 3 minutos.',
+  'Seu feed vai agradecer. A sua agenda também.',
 ];
 import { 
   Sparkles, 
@@ -25,6 +26,7 @@ import {
 
 function Home() {
   const { user, posts, agents, addPost, credits, addMessageToAgent } = useStore();
+  const daily = useDailyContent(user.dailyQuote, user.suggestions);
   const navigate = useNavigate();
   const [showSuggestModal, setShowSuggestModal] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] = useState('');
@@ -87,15 +89,19 @@ function Home() {
       {/* Top Greeting & Header */}
       <header className="home-header">
         <div className="welcome-section">
-          <span className="greeting-pill">{getTimeOfDayGreeting()}, {user.name || 'Especialista'}</span>
-          <h1 className="home-title">Sua Fábrica de Opinião de Alto Impacto</h1>
+          <span className="greeting-pill">{getTimeOfDayGreeting()}, {(user.name || 'Especialista').split(',')[0].trim()}</span>
+          <h1 className="home-title">O que você tem a dizer hoje?</h1>
           <DecryptText phrases={HOME_PHRASES} className="decrypt-subtitle" />
         </div>
         
         {/* Quick Credit indicator */}
         <div className="status-badge">
           <Zap size={14} className="glowing-icon" />
-          <span>Plano Pro Ativo</span>
+          <span>
+            { user.plan === 'pro' ? 'Plano Pro Ativo'
+            : user.plan === 'starter' ? 'Plano Starter Ativo'
+            : 'Plano Gratuito' }
+          </span>
         </div>
       </header>
 
@@ -107,12 +113,12 @@ function Home() {
             <Sparkles size={24} className="quote-stars" />
           </div>
           <div className="quote-text-wrapper">
-            <span className="quote-label">DIRETRIZ DA LINAGE:</span>
-            <p className="quote-text">"{user.dailyQuote}"</p>
+            <span className="quote-label">PERSPECTIVA DO DIA:</span>
+            <p className="quote-text">"{daily.quote}"</p>
           </div>
         </div>
         <button className="quote-action-btn" onClick={() => navigate('/advisor')}>
-          Consolidar Estratégia <ArrowRight size={16} />
+          Explorar com Linage <ArrowRight size={16} />
         </button>
       </div>
 
@@ -124,10 +130,10 @@ function Home() {
             <h2 className="card-title">Sugestões de Pauta de Hoje</h2>
             <span className="card-badge">Filtro de IA</span>
           </div>
-          <p className="card-desc">Tópicos selecionados por Linage focados em atrair investidores qualificados. Clique para iniciar uma conversa.</p>
+          <p className="card-desc">Temas que estão rendendo conversa agora. Clique para criar algo em torno disso.</p>
           
           <div className="suggestions-list">
-            {user.suggestions.map((suggestion, index) => (
+            {daily.suggestions.map((suggestion, index) => (
               <button 
                 key={index} 
                 className="suggestion-item-btn"
@@ -146,7 +152,7 @@ function Home() {
         {/* Create Card (Quick Agent Select) */}
         <div className="glass-card launcher-card">
           <h2 className="card-title">Começar Criação Imediata</h2>
-          <p className="card-desc">Cada agente possui um estilo autoral refinado para converter sua audiência em leads. Escolha o ideal:</p>
+          <p className="card-desc">Cinco estilos. Escolha o que faz mais sentido para o que você quer dizer hoje.</p>
           
           <div className="agents-quick-grid">
             {agents.map((agent) => {
@@ -189,10 +195,10 @@ function Home() {
         {posts.length === 0 ? (
           <div className="empty-posts-state">
             <PenTool size={36} className="empty-icon animate-bounce" />
-            <h3>Nenhum post gerado ainda</h3>
-            <p>Seus agentes estão prontos para redigir seus posts de atração de clientes. Fale com um agente ou com a Linage Advisor para captar seus primeiros leads qualificados!</p>
+            <h3>Ainda silencioso por aqui.</h3>
+            <p>Os agentes estão esperando qualquer tema, qualquer notícia, qualquer insight que ficou na cabeça durante a semana.</p>
             <button className="primary-action-btn" onClick={() => navigate('/advisor')}>
-              Falar com Linage Advisor
+              Conversar com Linage
             </button>
           </div>
         ) : (

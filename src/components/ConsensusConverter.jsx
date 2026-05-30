@@ -110,13 +110,12 @@ function ConsensusConverter() {
         <div className="consensus-header-left">
           <span className="consensus-badge">
             <span className="consensus-badge-dot" />
-            RADAR DE TESES OUTLIER
+            RADAR DE TESES INUSITADAS
           </span>
-          <h2 className="consensus-title">Conversor de Consenso Comum</h2>
+          <h2 className="consensus-title">Conversor de Senso Comum</h2>
         </div>
         <p className="consensus-description">
-          Flipar consensos mornos do mercado em teses contrárias (outlier) é a forma mais rápida
-          de capturar atenção orgânica e leads de alto valor no LinkedIn.
+          Transformar o senso comum do mercado em teses contrárias e inusitadas é a forma mais rápida de capturar atenção orgânica no LinkedIn.
         </p>
       </div>
 
@@ -124,14 +123,14 @@ function ConsensusConverter() {
       <div className="consensus-flipper">
         {/* Left — Consenso Morno (editable) */}
         <div className="consensus-col">
-          <span className="consensus-col-label consensus-col-label--warm">CONSENSO MORNO</span>
+          <span className="consensus-col-label consensus-col-label--warm">SENSO COMUM</span>
           <textarea
             className={`consensus-text-box consensus-text-editable${isDefault ? ' consensus-text-dimmed' : ''}`}
             value={currentText}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={(e) => handleTextChange(e.target.value)}
-            placeholder="Digite o consenso que quer flipar..."
+            placeholder="Digite o senso comum que quer flipar..."
           />
         </div>
 
@@ -149,7 +148,7 @@ function ConsensusConverter() {
 
         {/* Right — Ângulo Outlier */}
         <div className="consensus-col">
-          <span className="consensus-col-label consensus-col-label--outlier">ÂNGULO OUTLIER (POSICIONAMENTO)</span>
+          <span className="consensus-col-label consensus-col-label--outlier">ÂNGULO INUSITADO (POSICIONAMENTO)</span>
           <div className={`consensus-text-box consensus-text-box--outlier ${flipped ? 'consensus-text-box--visible' : ''}`}>
             {flipped ? (
               isDefault ? (
